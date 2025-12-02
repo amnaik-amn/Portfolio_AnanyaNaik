@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100%;
+}
+
+body {
+  @apply bg-paper-bg text-paper-text transition-colors duration-300;
+}
+
+body.dark {
+  @apply bg-ink-bg text-ink-text;
+}
+
+@keyframes scroll-dot {
+  0% {
+    opacity: 0;
+    transform: translateY(-2px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(6px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.8s infinite;
+}
+
+/* Geometric line styles */
+.geometric-line {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  stroke: rgb(229, 229, 229);
+  opacity: 0.6;
+}
+
+.dark .geometric-line {
+  stroke: rgb(42, 42, 42);
+  opacity: 0.8;
+}
+
+.geometric-line.animate {
+  animation: drawLine 2s ease-out forwards;
+}
+
+/* Hand-drawn effect */
+.sketch-border {
+  position: relative;
+}
+
+.sketch-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.3;
+  transform: rotate(-0.5deg);
+}
+
+.sketch-border::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border: 2px solid currentColor;
+  border-radius: 2px;
+  opacity: 0.2;
+  transform: rotate(0.5deg);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Utility: small caps formatting */
+@layer utilities {
+  .small-caps {
+    font-variant: small-caps;
+  }
+  .cap-initial {
+    font-size: 1.15em;
+    line-height: 1;
+    display: inline-block;
+  }
+}
+
