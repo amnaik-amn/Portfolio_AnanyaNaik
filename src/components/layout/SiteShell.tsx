@@ -53,7 +53,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 .map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={link.href as any}
                     className={clsx(
                       "text-sm font-medium tracking-wide uppercase transition-colors relative group",
                       activeSection === link.sectionId
@@ -78,7 +78,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 .map((link) => (
                   <Link
                     key={link.href}
-                    href={link.href}
+                    href={link.href as any}
                     className={clsx(
                       "text-sm font-medium tracking-wide uppercase transition-colors relative",
                       activeSection === link.sectionId
@@ -110,7 +110,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
-                  href={link.href}
+                  href={link.href as any}
                   className={clsx(
                     "py-2 text-base font-medium tracking-wide uppercase transition-colors",
                     pathname === link.href
