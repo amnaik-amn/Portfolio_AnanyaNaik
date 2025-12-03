@@ -150,8 +150,8 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
                 <div className="flex items-start gap-3">
                   <User className="mt-1 h-4 w-4 opacity-60" />
                   <div>
-                    <p className="text-xs uppercase tracking-[0.2em] opacity-70">Client</p>
-                    <p className="text-paper-text dark:text-ink-text">{project.client}</p>
+                    <p className="text-xs uppercase tracking-[0.2em] opacity-70">INSTRUCTOR</p>
+                    <p className="text-paper-text dark:text-ink-text">{project.client.replace(/^Instructor:\s*/i, "")}</p>
                   </div>
                 </div>
               )}
@@ -206,11 +206,25 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
               >
                 <h3 className="text-xl font-semibold tracking-tight">Site Diagrams</h3>
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {project.site_diagrams.map((img, i) => (
-                    <div key={img} className="relative aspect-[4/3] overflow-hidden rounded-lg border border-paper-line dark:border-ink-line">
-                      <Image src={img} alt={`Site diagram ${i + 1}`} fill className="object-cover" sizes="50vw" />
-                    </div>
-                  ))}
+                  {project.site_diagrams.map((img, i) => {
+                    const isProblemImage = img.includes("problemp1");
+                    return (
+                      <div
+                        key={img}
+                        className={"relative overflow-hidden rounded-lg border border-paper-line dark:border-ink-line " +
+                          (isProblemImage ? "bg-paper-surface dark:bg-ink-surface flex items-center justify-center" : " aspect-[4/3]")}
+                        style={isProblemImage ? { aspectRatio: "1456/822" } : undefined}
+                      >
+                        <Image
+                          src={img}
+                          alt={`Site diagram ${i + 1}`}
+                          fill
+                          className={isProblemImage ? "object-contain" : "object-cover"}
+                          sizes="50vw"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </motion.div>
             )}
