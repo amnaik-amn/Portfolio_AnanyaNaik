@@ -54,53 +54,44 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
       <section id="overview" className="relative mx-auto mb-20 max-w-7xl px-8 scroll-mt-28">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           {project.id === "arch-01" ? (
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              {/* Image column: 1/4 width on md+, full-width on small screens */}
-              <div className="relative md:col-span-1 h-56 md:h-[25vh] overflow-hidden rounded-2xl">
-                <Image
-                  src="/images/prednerp1_copy.png"
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 768px) 100vw, 25vw"
-                />
-              </div>
-
-              {/* Content column: 3/4 width contains the title and overlay but image container has no border */}
-              <div className="md:col-span-3">
-                <div className="relative h-[70vh] overflow-hidden rounded-2xl border border-paper-line dark:border-ink-line">
-                  <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/80 to-paper-bg/10 dark:from-ink-bg/85 dark:to-ink-bg/20" />
-                  <div className="relative z-10 flex h-full items-end p-10 md:p-14">
-                    <div className="max-w-3xl">
-                      <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-                        {(() => {
-                          const words = project.title.split(/\s+/);
-                          return (
-                            <span>
-                              {words.map((word, i) => {
-                                if (!word) return null;
-                                const first = word.charAt(0);
-                                const rest = word.slice(1).toLowerCase();
-                                const large = i === 1 || i === 2;
-                                return (
-                                  <span key={i} className="mr-[4px]">
-                                    <span className={large ? "cap-initial" : undefined}>{first}</span>
-                                    <span className="small-caps">{rest}</span>
-                                  </span>
-                                );
-                              })}
-                            </span>
-                          );
-                        })()}
-                      </h1>
-                      {project.category && (
-                        <p className="text-base uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-lg">
-                          {project.category.replace(/_/g, " ")}
-                        </p>
-                      )}
-                    </div>
-                  </div>
+            <div className="relative h-screen w-full overflow-hidden">
+              <Image
+                src="/images/prednerp1_copy.png"
+                alt={project.title}
+                fill
+                className="object-cover"
+                priority
+                sizes="100vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/70 to-paper-bg/10 dark:from-ink-bg/80 dark:to-ink-bg/10" />
+              <div className="relative z-10 flex h-full items-end p-6 md:p-14">
+                <div className="max-w-4xl px-6">
+                  <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-6xl">
+                    {(() => {
+                      const words = project.title.split(/\s+/);
+                      return (
+                        <span>
+                          {words.map((word, i) => {
+                            if (!word) return null;
+                            const first = word.charAt(0);
+                            const rest = word.slice(1).toLowerCase();
+                            const large = i === 1 || i === 2;
+                            return (
+                              <span key={i} className="mr-[6px]">
+                                <span className={large ? "cap-initial" : undefined}>{first}</span>
+                                <span className="small-caps">{rest}</span>
+                              </span>
+                            );
+                          })}
+                        </span>
+                      );
+                    })()}
+                  </h1>
+                  {project.category && (
+                    <p className="text-base uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-lg">
+                      {project.category.replace(/_/g, " ")}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
