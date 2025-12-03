@@ -41,8 +41,7 @@ export const sampleProjects: Project[] = [
     problem_statement:
       "The steep coastal site suffered from erosion, harsh western glare, and strong monsoon winds, while the brief required unobstructed sea views and protected outdoor living.",
     site_diagrams: [
-      "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=1200&auto=format&fit=crop&q=80",
-      "https://images.unsplash.com/photo-1495567720989-cebdbdd97913?w=1200&auto=format&fit=crop&q=80"
+      "/images/problemp1.png"
     ],
     solution:
       "The building terraces into the rock, forming wind-buffered courtyards. Deep overhangs and vertical fins filter low sun while framing horizons. Local laterite, reclaimed timber, and micro-piles reduce site disturbance.",
