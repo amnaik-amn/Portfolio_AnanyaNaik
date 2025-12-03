@@ -56,7 +56,7 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
           {project.id === "arch-01" ? (
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {/* Image column: 1/4 width on md+, full-width on small screens */}
-              <div className="relative md:col-span-1 h-56 md:h-[70vh] overflow-hidden rounded-2xl">
+              <div className="relative md:col-span-1 h-56 md:h-[25vh] overflow-hidden rounded-2xl">
                 <Image
                   src="/images/prednerp1_copy.png"
                   alt={project.title}
