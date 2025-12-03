@@ -13,7 +13,7 @@ const cards = [
     subtitle: "Spaces that inspire",
     icon: <Building2 className="h-10 w-10 text-dark" />,
     image: "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=800",
-    accent: "bg-blue"
+    accent: "bg-yellow"
   },
   {
     href: "/category/art",
@@ -45,9 +45,27 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero: minimalist with geometric lines */}
+      {/* Hero: minimalist with geometric lines + themed background images */}
       <section className="relative flex min-h-[72vh] items-center justify-center overflow-hidden pt-24">
         <GeometricLines variant="grid" animated className="opacity-40 dark:opacity-20" />
+
+        {/* Light background (visible only in light mode) */}
+        <img
+          src="/Portfolio2copy.png"
+          alt="Portfolio background light"
+          className="absolute inset-0 h-full w-full object-cover opacity-20 dark:hidden"
+        />
+
+        {/* Dark background (visible only in dark mode) */}
+        <img
+          src="/Portfolio2.png"
+          alt="Portfolio background dark"
+          className="absolute inset-0 h-full w-full object-cover opacity-20 hidden dark:block"
+        />
+
+        {/* Overlay to improve readability */}
+        <div className="absolute inset-0 bg-black/10 dark:bg-black/20" />
+
         <div className="relative z-10 mx-auto max-w-5xl px-8 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
@@ -63,7 +81,9 @@ export default function HomePage() {
             transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
             className="mx-auto max-w-2xl text-lg font-medium uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-xl"
           >
-            ARCHITECT. INNOVATOR. ARTIST.
+            <span className="inline-block rounded-md px-4 py-2 bg-white/30 dark:bg-black/25 backdrop-blur-sm ring-1 ring-white/10">
+              ARCHITECT. INNOVATOR. ARTIST.
+            </span>
           </motion.p>
           <motion.div
             initial={{ opacity: 0 }}

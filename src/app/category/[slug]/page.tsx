@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { listProjectsByType } from "@/data/api";
+import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { ProjectCard } from "@/components/portfolio/ProjectCard";
 import { Loader2 } from "lucide-react";
@@ -64,6 +65,30 @@ export default function CategoryPage({ params }: { params: { slug: string } }) {
             >
               {meta.description}
             </motion.p>
+          )}
+
+          {/* Architecture preview strip: show up to 5 project images individually */}
+          {type === "architecture" && projects.length > 0 && (
+            <div className="mt-8">
+              <div className="mx-auto max-w-4xl overflow-x-auto py-4 px-2">
+                <div className="flex items-stretch gap-6">
+                  {projects.slice(0, 5).map((p) => (
+                    <div
+                      key={p.id}
+                      className="relative h-44 w-64 flex-shrink-0 overflow-hidden rounded-2xl border border-paper-line shadow-lg"
+                    >
+                      <Image
+                        src={p.cover_image}
+                        alt={p.title}
+                        fill
+                        sizes="(max-width: 768px) 45vw, 16rem"
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           )}
         </div>
       </section>

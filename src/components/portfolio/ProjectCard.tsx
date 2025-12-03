@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { Project } from "@/data/projects";
 
 const typeColors: Record<Project["project_type"], string> = {
-  architecture: "#3772FF",
+  architecture: "#FDCA40",
   art: "#DF2935",
   personal: "#FDCA40",
 };
@@ -41,7 +41,12 @@ function renderFormattedTitle(title: string) {
 }
 
 export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
-  const accent = typeColors[project.project_type] ?? "#3772FF";
+  const accent = typeColors[project.project_type] ?? "#FDCA40";
+  // For specific cover images we want to adjust the focal point slightly
+  // Apply the left shift to known render filenames (renderp1, prednerp1)
+  const objectPosition = project.cover_image?.includes("renderp1") || project.cover_image?.includes("prednerp1")
+    ? "30% 50%"
+    : "50% 50%";
   return (
     <motion.article
       layout
@@ -66,6 +71,7 @@ export function ProjectCard({ project, index = 0 }: ProjectCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, 33vw"
             className="object-cover opacity-80 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+            style={{ objectPosition: objectPosition }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           <div className="absolute inset-0 flex items-end p-6">

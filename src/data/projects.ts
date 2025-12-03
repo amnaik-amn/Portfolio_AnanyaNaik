@@ -33,7 +33,7 @@ export const sampleProjects: Project[] = [
     year: "2024",
     area: "4,900 sq ft",
     client: "The Marinho Family",
-    cover_image: "/images/renderp1.jpg",
+    cover_image: "/images/prednerp1_copy.png",
     gallery_images: [
       "https://images.unsplash.com/photo-1600607687920-4e2a87fc1574?w=1200&auto=format&fit=crop&q=80",
       "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1200&auto=format&fit=crop&q=80"
