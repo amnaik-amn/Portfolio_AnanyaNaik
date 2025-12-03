@@ -54,13 +54,15 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
       <section id="overview" className="relative mx-auto mb-20 max-w-7xl px-8 scroll-mt-28">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           <div className="relative h-[70vh] overflow-hidden rounded-2xl border border-paper-line dark:border-ink-line">
-            <Image 
-              src="/images/renderp1.jpg" 
-              alt={project.title} 
-              fill 
-              className="object-cover" 
-              priority 
-              sizes="100vw" 
+            {/* Use the project-specific cover for the project list, but prefer a dedicated hero
+                image for arch-01 (prednerp1_copy) on the project detail page only. */}
+            <Image
+              src={project.id === "arch-01" ? "/images/prednerp1_copy.png" : (project.cover_image ?? "/images/renderp1.jpg")}
+              alt={project.title}
+              fill
+              className="object-cover"
+              priority
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/80 to-paper-bg/10 dark:from-ink-bg/85 dark:to-ink-bg/20" />
             <div className="relative z-10 flex h-full items-end p-10 md:p-14">
