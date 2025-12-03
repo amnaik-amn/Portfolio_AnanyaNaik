@@ -30,9 +30,9 @@ export const sampleProjects: Project[] = [
     project_type: "architecture",
     category: "museum",
     location: "Pier 19, San Francisco",
-    year: "2024",
-    area: "4,900 sq ft",
-    client: "The Marinho Family",
+    year: "2025",
+    area: "100,000 sq ft",
+    client: "Instructor: Mariana Gutheim",
     cover_image: "/images/renderp1.jpg",
     gallery_images: [
       "https://images.unsplash.com/photo-1600607687920-4e2a87fc1574?w=1200&auto=format&fit=crop&q=80",
@@ -50,7 +50,7 @@ export const sampleProjects: Project[] = [
       "https://images.unsplash.com/photo-1481277542470-605612bd2d61?w=1200&auto=format&fit=crop&q=80"
     ],
     partners: ["Coastal Ecology Lab", "Goa Stone Crafts", "Studio Forma"],
-    origin: "Graduate Design Studio, Semester 9"
+    origin: "Studio V, University of San Francisco"
   },
   {
     id: "art-01",
