@@ -43,18 +43,12 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
 
   return (
     <div className="min-h-screen bg-paper-bg text-paper-text dark:bg-ink-bg dark:text-ink-text">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-8 py-8">
-        <Button variant="invert" onClick={() => router.back()}>
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
-        </Button>
-      </div>
 
       {/* Intro section: full page with title + description over cover image, geometric lines */}
       <section id="overview" className="relative mx-auto mb-20 max-w-7xl px-8 scroll-mt-28">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           {project.id === "arch-01" ? (
-            <div className="relative h-screen w-full overflow-hidden">
+            <div className="relative h-[calc(100vh-6rem)] w-full overflow-hidden">
               <Image
                 src="/images/prednerp1_copy.png"
                 alt={project.title}
@@ -64,6 +58,12 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
                 sizes="100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/70 to-paper-bg/10 dark:from-ink-bg/80 dark:to-ink-bg/10" />
+              <div className="absolute left-6 top-6 z-20">
+                <Button variant="invert" onClick={() => router.back()}>
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
+              </div>
               <div className="relative z-10 flex h-full items-end p-6 md:p-14">
                 <div className="max-w-4xl px-6">
                   <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-6xl">
@@ -96,7 +96,7 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
               </div>
             </div>
           ) : (
-            <div className="relative h-[70vh] overflow-hidden rounded-2xl border border-paper-line dark:border-ink-line">
+            <div className="relative h-[calc(100vh-6rem)] overflow-hidden rounded-2xl border border-paper-line dark:border-ink-line">
               <Image
                 src={project.cover_image ?? "/images/renderp1.jpg"}
                 alt={project.title}
@@ -106,6 +106,12 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
                 sizes="100vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/80 to-paper-bg/10 dark:from-ink-bg/85 dark:to-ink-bg/20" />
+              <div className="absolute left-6 top-6 z-20 md:hidden">
+                <Button variant="invert" onClick={() => router.back()}>
+                  <ArrowLeft className="mr-2 h-4 w-4" />
+                  Back
+                </Button>
+              </div>
               <div className="relative z-10 flex h-full items-end p-10 md:p-14">
                 <div className="max-w-3xl">
                   <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
