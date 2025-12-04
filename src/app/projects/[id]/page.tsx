@@ -41,108 +41,179 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
     );
   }
 
+  // Order site diagrams so problem images (containing 'problemp1') appear first
+  const orderedSiteDiagrams = project.site_diagrams && project.site_diagrams.length > 0
+    ? [
+        ...project.site_diagrams.filter((img: string) => img.includes("problemp1")),
+        ...project.site_diagrams.filter((img: string) => !img.includes("problemp1"))
+      ]
+    : [];
+
   return (
     <div className="min-h-screen bg-paper-bg text-paper-text dark:bg-ink-bg dark:text-ink-text">
+      {/* SVG clipPath defs for concave hero bottom */}
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <clipPath id="hero-bottom-concave" clipPathUnits="objectBoundingBox">
+            {/* path uses 0..1 coordinates; concave dip that sits below the title */}
+            <path d="M0,0 H1 V0.80 C0.75,1 0.25,1 0,0.80 Z" />
+          </clipPath>
+        </defs>
+      </svg>
 
       {/* Intro section: full page with title + description over cover image, geometric lines */}
       <section id="overview" className="relative mx-auto mb-20 max-w-7xl px-8 scroll-mt-28">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
           {project.id === "arch-01" ? (
-            <div className="relative h-[calc(100vh-6rem)] w-full overflow-hidden">
-              <Image
-                src="/images/prednerp1_copy.png"
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/70 to-paper-bg/10 dark:from-ink-bg/80 dark:to-ink-bg/10" />
-              <div className="absolute left-6 top-6 z-20">
-                <Button variant="invert" onClick={() => router.back()}>
+            <>
+              <div
+                className="relative w-screen left-1/2 -translate-x-1/2 overflow-visible"
+                style={{ height: "calc(100vh - 6rem + 10pt)", WebkitClipPath: "url(#hero-bottom-concave)", clipPath: "url(#hero-bottom-concave)" }}
+              >
+                <Image
+                  src="/images/prednerp1_copy.png"
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  style={{ objectPosition: "50% 25%" }}
+                  priority
+                  sizes="100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/70 to-paper-bg/10 dark:from-ink-bg/80 dark:to-ink-bg/10" />
+                <Button
+                  variant="invert"
+                  onClick={() => router.back()}
+                  className="absolute left-4 top-4 z-30 md:left-8 md:top-8"
+                >
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Back
                 </Button>
-              </div>
-              <div className="relative z-10 flex h-full items-end p-6 md:p-14">
-                <div className="max-w-4xl px-6">
-                  <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-6xl">
-                    {(() => {
-                      const words = project.title.split(/\s+/);
-                      return (
-                        <span>
-                          {words.map((word, i) => {
-                            if (!word) return null;
-                            const first = word.charAt(0);
-                            const rest = word.slice(1).toLowerCase();
-                            const large = i === 1 || i === 2;
-                            return (
-                              <span key={i} className="mr-[6px]">
-                                <span className={large ? "cap-initial" : undefined}>{first}</span>
-                                <span className="small-caps">{rest}</span>
-                              </span>
-                            );
-                          })}
-                        </span>
-                      );
-                    })()}
-                  </h1>
-                  {project.category && (
-                    <p className="text-base uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-lg">
-                      {project.category.replace(/_/g, " ")}
-                    </p>
-                  )}
+                <div className="relative z-10 h-full p-6 md:p-14">
+                  <div className="max-w-4xl px-6 absolute left-6 md:left-14" style={{ bottom: "40%" }}>
+                    <h1 className="mb-4 text-[calc(2.25rem*1.1)] font-bold tracking-tight md:text-[calc(3.75rem*1.1)]">
+                      {(() => {
+                        const words = project.title.split(/\s+/);
+                        return (
+                          <span>
+                            {words.map((word, i) => {
+                              if (!word) return null;
+                              const first = word.charAt(0);
+                              const rest = word.slice(1).toLowerCase();
+                              const large = i === 1 || i === 2;
+                              return (
+                                <span key={i} className="mr-[6px]">
+                                  <span className={large ? "cap-initial" : undefined}>{first}</span>
+                                  <span className="small-caps">{rest}</span>
+                                </span>
+                              );
+                            })}
+                          </span>
+                        );
+                      })()}
+                    </h1>
+                    {project.category && (
+                      <p className="text-[calc(1rem*1.1)] uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-[calc(1.125rem*1.1)]">
+                        {project.category.replace(/_/g, " ")}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="relative w-screen left-1/2 -translate-x-1/2 overflow-visible" style={{ marginTop: "-90pt" }}>
+                <svg
+                  className="w-full h-24 pointer-events-none relative z-20"
+                  viewBox="-100 0 1200 100"
+                  preserveAspectRatio="none"
+                  overflow="visible"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden
+                >
+                  <path
+                    d="M-100,0 C200,114 800,114 1100,0"
+                    fill="none"
+                    stroke="#e02f28"
+                    strokeWidth="74"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            </>
           ) : (
-            <div className="relative h-[calc(100vh-6rem)] overflow-hidden rounded-2xl border border-paper-line dark:border-ink-line">
-              <Image
-                src={project.cover_image ?? "/images/renderp1.jpg"}
-                alt={project.title}
-                fill
-                className="object-cover"
-                priority
-                sizes="100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/80 to-paper-bg/10 dark:from-ink-bg/85 dark:to-ink-bg/20" />
-              <div className="absolute left-6 top-6 z-20 md:hidden">
-                <Button variant="invert" onClick={() => router.back()}>
+            <>
+              <div
+                className="relative w-screen left-1/2 -translate-x-1/2 overflow-visible rounded-2xl border border-paper-line dark:border-ink-line"
+                style={{ height: "calc(100vh - 6rem + 10pt)", WebkitClipPath: "url(#hero-bottom-concave)", clipPath: "url(#hero-bottom-concave)" }}
+              >
+                <Image
+                  src={project.cover_image ?? "/images/renderp1.jpg"}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                  style={{ objectPosition: "50% 25%" }}
+                  priority
+                  sizes="100vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-paper-bg/80 to-paper-bg/10 dark:from-ink-bg/85 dark:to-ink-bg/20" />
+                <Button
+                  variant="invert"
+                  onClick={() => router.back()}
+                  className="absolute left-4 top-4 z-30 md:left-8 md:top-8"
+                >
                   <ArrowLeft className="mr-2 h-4 w-4" />
                   Back
                 </Button>
-              </div>
-              <div className="relative z-10 flex h-full items-end p-10 md:p-14">
-                <div className="max-w-3xl">
-                  <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
-                    {(() => {
-                      const words = project.title.split(/\s+/);
-                      return (
-                        <span>
-                          {words.map((word, i) => {
-                            if (!word) return null;
-                            const first = word.charAt(0);
-                            const rest = word.slice(1).toLowerCase();
-                            const large = i === 1 || i === 2;
-                            return (
-                              <span key={i} className="mr-[4px]">
-                                <span className={large ? "cap-initial" : undefined}>{first}</span>
-                                <span className="small-caps">{rest}</span>
-                              </span>
-                            );
-                          })}
-                        </span>
-                      );
-                    })()}
-                  </h1>
-                  {project.category && (
-                    <p className="text-base uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-lg">
-                      {project.category.replace(/_/g, " ")}
-                    </p>
-                  )}
+                <div className="relative z-10 h-full p-10 md:p-14">
+                  <div className="max-w-3xl absolute left-6 md:left-14" style={{ bottom: "40%" }}>
+                    <h1 className="mb-4 text-[calc(2.25rem*1.1)] font-bold tracking-tight md:text-[calc(3rem*1.1)]">
+                      {(() => {
+                        const words = project.title.split(/\s+/);
+                        return (
+                          <span>
+                            {words.map((word, i) => {
+                              if (!word) return null;
+                              const first = word.charAt(0);
+                              const rest = word.slice(1).toLowerCase();
+                              const large = i === 1 || i === 2;
+                              return (
+                                <span key={i} className="mr-[4px]">
+                                  <span className={large ? "cap-initial" : undefined}>{first}</span>
+                                  <span className="small-caps">{rest}</span>
+                                </span>
+                              );
+                            })}
+                          </span>
+                        );
+                      })()}
+                    </h1>
+                    {project.category && (
+                      <p className="text-[calc(1rem*1.1)] uppercase tracking-[0.3em] text-paper-text-muted dark:text-ink-text-muted md:text-[calc(1.125rem*1.1)]">
+                        {project.category.replace(/_/g, " ")}
+                      </p>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
+              <div className="relative w-screen left-1/2 -translate-x-1/2 overflow-visible" style={{ marginTop: "-90pt" }}>
+                <svg
+                  className="w-full h-24 pointer-events-none relative z-20"
+                  viewBox="-100 0 1200 100"
+                  preserveAspectRatio="none"
+                  overflow="visible"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden
+                >
+                  <path
+                    d="M-100,0 C200,114 800,114 1100,0"
+                    fill="none"
+                    stroke="#e02f28"
+                    strokeWidth="74"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </div>
+            </>
           )}
         </motion.div>
       </section>
@@ -227,6 +298,51 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
           </motion.aside>
 
           <div className="md:col-span-2 space-y-10">
+            {/* Site Diagrams (promoted above Problem, images first) */}
+            {project.site_diagrams && project.site_diagrams.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6 }}
+                id="site-diagrams"
+                className="space-y-4 scroll-mt-28"
+              >
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  {orderedSiteDiagrams.map((img, i) => {
+                    const isProblemImage = img.includes("problemp1");
+                    return (
+                      <div
+                        key={img}
+                        className={
+                          "relative rounded-lg border border-paper-line dark:border-ink-line " +
+                          (isProblemImage ? "bg-paper-surface dark:bg-ink-surface flex items-center justify-center p-4" : " overflow-hidden aspect-[4/3]")
+                        }
+                      >
+                        {isProblemImage ? (
+                          <Image
+                            src={img}
+                            alt={`Site diagram ${i + 1}`}
+                            width={1920}
+                            height={1084}
+                            className="object-contain"
+                          />
+                        ) : (
+                          <Image
+                            src={img}
+                            alt={`Site diagram ${i + 1}`}
+                            fill
+                            className="object-cover"
+                            sizes="50vw"
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+
             {/* Problem */}
             {project.problem_statement && (
               <motion.div
@@ -239,41 +355,6 @@ export default function ProjectViewPage({ params }: { params: { id: string } }) 
               >
                 <h3 className="mb-2 text-xl font-semibold tracking-tight">Problem</h3>
                 <p className="text-paper-text-muted dark:text-ink-text-muted">{project.problem_statement}</p>
-              </motion.div>
-            )}
-
-            {/* Site Diagrams */}
-            {project.site_diagrams && project.site_diagrams.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-                id="site-diagrams"
-                className="space-y-4 scroll-mt-28"
-              >
-                <h3 className="text-xl font-semibold tracking-tight">Site Diagrams</h3>
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  {project.site_diagrams.map((img, i) => {
-                    const isProblemImage = img.includes("problemp1");
-                    return (
-                      <div
-                        key={img}
-                        className={"relative overflow-hidden rounded-lg border border-paper-line dark:border-ink-line " +
-                          (isProblemImage ? "bg-paper-surface dark:bg-ink-surface flex items-center justify-center" : " aspect-[4/3]")}
-                        style={isProblemImage ? { aspectRatio: "1456/822" } : undefined}
-                      >
-                        <Image
-                          src={img}
-                          alt={`Site diagram ${i + 1}`}
-                          fill
-                          className={isProblemImage ? "object-contain" : "object-cover"}
-                          sizes="50vw"
-                        />
-                      </div>
-                    );
-                  })}
-                </div>
               </motion.div>
             )}
 
